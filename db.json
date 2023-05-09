@@ -19,7 +19,7 @@
         "type": "model",
         "fields": [
           {
-            "name": "idTest",
+            "name": "eeeeeeeeeeee",
             "type": "Int",
             "optional": false,
             "restriction": "@id @default(autoincrement())"

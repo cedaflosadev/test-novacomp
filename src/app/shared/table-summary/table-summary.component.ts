@@ -42,10 +42,6 @@ export class TableSummaryComponent {
     });
   }
 
-  downloadPrismaFile(buildPrismaFile: string): void {
-    this.appService.downloadPrismaFile(buildPrismaFile);
-  }
-
   deleteTable(index: number) {
     this.fileDatabase.tables.splice(index, 1);
     this.contentFile = this.appService.mapContentFromDatabase(
