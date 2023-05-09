@@ -1,0 +1,80 @@
+.container-main__table {
+  display: flex;
+  align-items: center;
+  gap: 0px;
+  justify-content: space-between;
+  margin: 0 20px;
+  padding: 10px 20px;
+  border: 1px solid #04aa6d;
+  background-color: #04aa6d;
+  color: #ffffff;
+  border-bottom: none;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+  & h3 {
+    margin: 0;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow: auto;
+    margin: 0 20px;
+    padding: 15px 20px;
+    border: 1px solid #04aa6d;
+
+    &__loop {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+
+      &__tables {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: rgb(175, 231, 203);
+        padding: 10px;
+
+        &__header {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          & h4 {
+            margin: 0;
+          }
+        }
+
+        &__buttons {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+      }
+
+      &__table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+
+        & td,
+        th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+
+        & th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+        }
+
+        & tbody {
+          text-align: center;
+        }
+      }
+    }
+  }
+}

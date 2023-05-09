@@ -1,0 +1,39 @@
+<div class="container-main__table">
+  <h3>Tables Summary</h3>
+  <button (click)="downloadPrismaFile(contentFile)">Export prisma file</button>
+</div>
+<div class="container-main__table__content">
+  <div
+    class="container-main__table__content__loop"
+    *ngFor="let table of fileDatabase.tables; let indextable = index"
+  >
+    <div class="container-main__table__content__loop__tables">
+      <div class="container-main__table__content__loop__tables__header">
+        <h4>{{ table.name }}</h4>
+        <span>({{ table.type }})</span>
+      </div>
+      <div class="container-main__table__content__loop__tables__buttons">
+        <button (click)="updateTable(table)">Update</button>
+        <button (click)="deleteTable(indextable)">Delete</button>
+      </div>
+    </div>
+
+    <table class="container-main__table__content__loop__table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Fields</th>
+          <th>Restrictions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let field of table.fields">
+          <td>{{ field.name }}</td>
+          <td>{{ field.optional ? field.type + "?" : field.type }}</td>
+          <td>{{ field.restriction }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+  </div>
+</div>

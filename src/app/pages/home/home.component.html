@@ -1,0 +1,16 @@
+<div class="container-main">
+  
+
+  <app-form-creator-updater
+    [contentFile]="contentFile"
+    [fileDatabase]="fileDatabase"
+    [formAddTable]="formAddTable"
+  ></app-form-creator-updater>
+
+  <app-table-summary
+    [contentFile]="contentFile"
+    [fileDatabase]="fileDatabase"
+    [formAddTable]="formAddTable"
+    (updateEmit)="updateTable($event)"
+  ></app-table-summary>
+</div>

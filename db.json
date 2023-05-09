@@ -1,0 +1,67 @@
+{
+  "database": {
+    "config": [
+      {
+        "name": "client",
+        "type": "generator",
+        "provider": "prisma-client-js"
+      },
+      {
+        "name": "db",
+        "type": "datasource",
+        "provider": "postgresql",
+        "url": "postgresql://koombea-test:123456@localhost:32780/koombea-test?schema=public"
+      }
+    ],
+    "tables": [
+      {
+        "name": "Koombea",
+        "type": "model",
+        "fields": [
+          {
+            "name": "idTest",
+            "type": "Int",
+            "optional": false,
+            "restriction": "@id @default(autoincrement())"
+          },
+          {
+            "name": "createdAt",
+            "type": "DateTime",
+            "optional": false,
+            "restriction": "@default(now())"
+          },
+          {
+            "name": "push",
+            "type": "Boolean",
+            "optional": true,
+            "restriction": "@default(false)"
+          },
+          {
+            "name": "publish",
+            "type": "Boolean",
+            "optional": true,
+            "restriction": "@default(true)"
+          }
+        ]
+      },
+      {
+        "name": "MiniSan",
+        "type": "model",
+        "fields": [
+          {
+            "name": "identificator",
+            "type": "Int",
+            "optional": false,
+            "restriction": "@id @default(autoincrement())"
+          },
+          {
+            "name": "createdAt",
+            "type": "DateTime",
+            "optional": true,
+            "restriction": "@default(now())"
+          }
+        ]
+      }
+    ]
+  }
+}

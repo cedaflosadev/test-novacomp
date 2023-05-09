@@ -1,0 +1,65 @@
+<div class="container-main__form__cu">
+  <h3>Creator / Updater Form</h3>
+  <div class="container-main__form__cu__content">
+    <form
+      class="container-main__form__cu__content__form"
+      [formGroup]="formAddTable"
+    >
+      <div class="container-main__form__cu__content__form__name">
+        <label for="table_name">Table name:</label>
+        <input formControlName="name" type="text" name="table_name" />
+        <button (click)="addField()">Add Field</button>
+      </div>
+
+      <div
+        class="container-main__form__cu__content__form__fields"
+        formArrayName="fields"
+      >
+        <div
+          *ngFor="let item of fieldsByTable.controls; let index = index"
+          [formGroupName]="index"
+        >
+          <div
+            class="container-main__form__cu__content__form__fields__controls"
+          >
+            <div
+              class="container-main__form__cu__content__form__fields__controls__group"
+            >
+              <label>Field name:</label>
+              <input formControlName="name" type="text" />
+            </div>
+            <div
+              class="container-main__form__cu__content__form__fields__controls__group"
+            >
+              <label>Field type:</label>
+              <select formControlName="type">
+                <option value="Int">Integer</option>
+                <option value="String">String</option>
+                <option value="Boolean">Boolean</option>
+                <option value="DateTime">DateTime</option>
+              </select>
+            </div>
+            <div
+              class="container-main__form__cu__content__form__fields__controls__single"
+            >
+              <label>Optional:</label>
+              <input formControlName="optional" type="checkbox" />
+            </div>
+            <div
+              class="container-main__form__cu__content__form__fields__controls__group"
+            >
+              <label>Field restrictions:</label>
+              <input formControlName="restriction" type="text" />
+            </div>
+            <button (click)="deleteField(index)">Delete</button>
+          </div>
+          <br />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div *ngIf="formAddTable.valid" class="container-main__form__cu__buttons">
+    <button (click)="cancelTable()">Cancel</button>
+    <button (click)="saveTable()">Save</button>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+.container-main__form__cu {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+  margin: 0 10px;
+  padding: 20px 10px;
+
+  & h3 {
+    margin: 0;
+    align-items: center;
+    background-color: #04aa6d;
+    border-top: 1px solid #04aa6d;
+    color: #ffffff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    padding: 10px 10px;
+  }
+
+  &__content {
+    border: 1px solid #04aa6d;
+    padding: 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      &__name {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      &__fields {
+        border-top: 1px solid #04aa6d;
+        padding-top: 20px;
+        max-height: 17vh;
+        overflow: auto;
+
+        &__controls {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+          justify-content: space-between;
+
+          &__group {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+          }
+
+          &__single {
+            display: flex;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    border: 1px solid #04aa6d;
+    border-top: none;
+    padding: 20px;
+  }
+}
