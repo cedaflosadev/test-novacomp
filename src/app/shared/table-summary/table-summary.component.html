@@ -1,9 +1,11 @@
 <ngx-spinner>
   <p class="loading">Loading ...</p>
 </ngx-spinner>
-<div  *ngIf="showContent" class="container-main__table">
+<div *ngIf="showContent" class="container-main__table">
   <div class="container-main__table__title">
     <h3>Tables Summary</h3>
+
+    <button (click)="downloadPrismaFile()">Export Prisma File</button>
   </div>
   <div class="container-main__table__content">
     <div

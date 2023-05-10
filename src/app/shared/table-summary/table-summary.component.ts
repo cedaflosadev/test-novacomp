@@ -72,4 +72,11 @@ export class TableSummaryComponent {
   updateTable(id: number): void {
     this.updateEmit.emit(id);
   }
+
+  downloadPrismaFile(): void {
+    this.contentFile = this.appService.mapContentFromDatabase(
+      this.fileDatabase
+    );
+    this.appService.downloadPrismaFile(this.contentFile);
+  }
 }

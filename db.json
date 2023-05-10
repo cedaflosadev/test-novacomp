@@ -19,46 +19,22 @@
         "type": "model",
         "fields": [
           {
-            "name": "dff",
+            "name": "id",
             "type": "Int",
             "optional": false,
             "restriction": "@id @default(autoincrement())"
           },
           {
-            "name": "contenido",
+            "name": "email",
+            "type": "String",
+            "optional": false,
+            "restriction": "@unique"
+          },
+          {
+            "name": "name",
             "type": "String",
             "optional": true,
             "restriction": ""
-          },
-          {
-            "name": "varchar",
-            "type": "String",
-            "optional": false,
-            "restriction": "@db.VarChar(200)"
-          },
-          {
-            "name": "optiona1",
-            "type": "Boolean",
-            "optional": true,
-            "restriction": "@default(false)"
-          },
-          {
-            "name": "optional2",
-            "type": "String",
-            "optional": true,
-            "restriction": "@db.VarChar(200)"
-          }
-        ]
-      },
-      {
-        "name": "Post5",
-        "type": "model",
-        "fields": [
-          {
-            "name": "idchanged",
-            "type": "Int",
-            "optional": false,
-            "restriction": "@id @default(autoincrement())"
           }
         ]
       }
