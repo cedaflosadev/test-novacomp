@@ -15,7 +15,7 @@
     ],
     "tables": [
       {
-        "name": "Post",
+        "name": "User",
         "type": "model",
         "fields": [
           {
@@ -39,7 +39,7 @@
         ]
       },
       {
-        "name": "tableName",
+        "name": "TableNam",
         "type": "model",
         "fields": [
           {
@@ -65,6 +65,24 @@
             "type": "DateTime",
             "optional": false,
             "restriction": "@default(now())"
+          }
+        ]
+      },
+      {
+        "name": "Post",
+        "type": "model",
+        "fields": [
+          {
+            "name": "id",
+            "type": "Int",
+            "optional": false,
+            "restriction": "@id @default(autoincrement())"
+          },
+          {
+            "name": "Content",
+            "type": "Boolean",
+            "optional": true,
+            "restriction": "@default(true)"
           }
         ]
       }
