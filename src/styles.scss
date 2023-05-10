@@ -16,3 +16,19 @@ button {
   color: white;
   padding-top: 50px;
 }
+
+input[type="text"] {
+  padding: 5px 10px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+select {
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  text-align: center;
+  cursor: pointer;
+  width: 200px;
+}

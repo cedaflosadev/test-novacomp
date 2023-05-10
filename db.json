@@ -15,7 +15,7 @@
     ],
     "tables": [
       {
-        "name": "OptionalChanged",
+        "name": "Post",
         "type": "model",
         "fields": [
           {

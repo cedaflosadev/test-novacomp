@@ -16,10 +16,9 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { take, tap, timeout } from 'rxjs';
+import { take, tap } from 'rxjs';
 import { Database, Table } from 'src/app/interfaces/database.interface';
 import { AppService } from 'src/app/services/app.service';
-import { BannerMessageComponent } from '../banner-message/banner-message.component';
 import { Router, RouterModule } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
@@ -32,7 +31,6 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    BannerMessageComponent,
     RouterModule,
     NgxSpinnerModule,
   ],
@@ -45,8 +43,6 @@ export class FormCreatorUpdaterComponent implements OnChanges {
   @Input() contentFile = '';
 
   @Input() id = '';
-
-  bannerMessage = { message: '', type: '' };
 
   constructor(
     private appService: AppService,
@@ -108,28 +104,11 @@ export class FormCreatorUpdaterComponent implements OnChanges {
     this.router.navigate(['./']);
   }
 
-  showHideBanner(message: string = '', type: string = '') {
-    this.bannerMessage = { message, type };
-  }
-
-  getFormValidationErrors() {
-    Object.keys(this.formAddTable.controls).forEach((key) => {
-      const controlErrors: ValidationErrors | null =
-        this.formAddTable!.get(key)!.errors;
-      if (controlErrors != null) {
-        Object.keys(controlErrors).forEach((keyError) => {
-          this.showHideBanner('* Form have erros: ' + keyError, 'error');
-        });
-      }
-    });
-  }
-
   saveTable() {
     this.spinner.show(undefined, { fullScreen: true });
-    this.showHideBanner();
 
     if (this.formAddTable.invalid) {
-      return this.getFormValidationErrors();
+      return;
     }
 
     if (this.formAddTable.valid) {
@@ -148,12 +127,10 @@ export class FormCreatorUpdaterComponent implements OnChanges {
           take(1),
           tap(() => {
             this.appService.buildPrismaFileHanllde(this.contentFile);
-            this.showHideBanner('Esquema actualizado correctamente', 'success');
             setTimeout(() => {
               setTimeout(() => {
                 this.spinner.hide();
               }, 200);
-              this.showHideBanner();
               this.router.navigate(['./']);
             }, 800);
           })
