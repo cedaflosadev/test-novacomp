@@ -1,18 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 
@@ -43,6 +36,8 @@ export class FormCreatorUpdaterComponent implements OnChanges {
   @Input() contentFile = '';
 
   @Input() id = '';
+
+  validations = { nameExist: false };
 
   constructor(
     private appService: AppService,
@@ -104,14 +99,39 @@ export class FormCreatorUpdaterComponent implements OnChanges {
     this.router.navigate(['./']);
   }
 
-  saveTable() {
-    this.spinner.show(undefined, { fullScreen: true });
+  customValidations() {
+    this.initValidations();
 
     if (this.formAddTable.invalid) {
+      return false;
+    }
+
+    const tableCreatedId = this.fileDatabase.tables.findIndex(
+      (table) => table.name === this.formAddTable.controls['name'].value
+    );
+
+    if (tableCreatedId !== -1 && Number(this.id) !== tableCreatedId) {
+      this.validations.nameExist = true;
+      return false;
+    }
+
+    return true;
+  }
+
+  initValidations() {
+    this.validations = { nameExist: false };
+  }
+
+  saveTable() {
+    const passValidations = this.customValidations();
+
+    if (!passValidations) {
       return;
     }
 
     if (this.formAddTable.valid) {
+      this.spinner.show(undefined, { fullScreen: true });
+
       if (this.id) {
         this.fileDatabase.tables[Number(this.id)] = this.formAddTable.value;
       } else {

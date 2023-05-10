@@ -8,7 +8,18 @@
     class="container-main__form__cu__content__name"
   >
     <label for="table_name">* Table name:</label>
-    <input formControlName="name" type="text" name="table_name" />
+    <input
+      (keydown.space)="$event.preventDefault()"
+      (keyup.space)="$event.preventDefault()"
+      (keypress.space)="$event.preventDefault()"
+      formControlName="name"
+      type="text"
+      name="table_name"
+    />
+    <span *ngIf="validations.nameExist" style="color: #f62020"
+      ><b>* Table already exist</b></span
+    >
+
     <button (click)="addField()">Add Field</button>
   </div>
 
@@ -32,7 +43,13 @@
               class="container-main__form__cu__content__form__fields__controls__group"
             >
               <label>* Field name:</label>
-              <input formControlName="name" type="text" />
+              <input
+                (keydown.space)="$event.preventDefault()"
+                (keyup.space)="$event.preventDefault()"
+                (keypress.space)="$event.preventDefault()"
+                formControlName="name"
+                type="text"
+              />
             </div>
             <div
               class="container-main__form__cu__content__form__fields__controls__group"
