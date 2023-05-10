@@ -10,5 +10,5 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   imports: [RouterModule, NavbarComponent],
 })
 export class AppComponent {
-  title = 'Koombea - Database Admin';
+  title = 'Database Admin';
 }
