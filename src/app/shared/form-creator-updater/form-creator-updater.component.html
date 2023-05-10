@@ -1,16 +1,22 @@
 <div class="container-main__form__cu">
-  <h3>Creator / Updater Form</h3>
+  <div class="container-main__form__cu__title">
+    <h3>Creator / Updater Form</h3>
+  </div>
+
+  <div
+    [formGroup]="formAddTable"
+    class="container-main__form__cu__content__name"
+  >
+    <label for="table_name">* Table name:</label>
+    <input formControlName="name" type="text" name="table_name" />
+    <button (click)="addField()">Add Field</button>
+  </div>
+
   <div class="container-main__form__cu__content">
     <form
       class="container-main__form__cu__content__form"
       [formGroup]="formAddTable"
     >
-      <div class="container-main__form__cu__content__form__name">
-        <label for="table_name">Table name:</label>
-        <input formControlName="name" type="text" name="table_name" />
-        <button (click)="addField()">Add Field</button>
-      </div>
-
       <div
         class="container-main__form__cu__content__form__fields"
         formArrayName="fields"
@@ -25,13 +31,13 @@
             <div
               class="container-main__form__cu__content__form__fields__controls__group"
             >
-              <label>Field name:</label>
+              <label>* Field name:</label>
               <input formControlName="name" type="text" />
             </div>
             <div
               class="container-main__form__cu__content__form__fields__controls__group"
             >
-              <label>Field type:</label>
+              <label>* Field type:</label>
               <select formControlName="type">
                 <option value="Int">Integer</option>
                 <option value="String">String</option>
@@ -58,8 +64,31 @@
       </div>
     </form>
   </div>
-  <div *ngIf="formAddTable.valid" class="container-main__form__cu__buttons">
-    <button (click)="cancelTable()">Cancel</button>
-    <button (click)="saveTable()">Save</button>
+
+  <app-banner-message
+    *ngIf="bannerMessage.message"
+    [message]="bannerMessage.message"
+    [type]="bannerMessage.type"
+  ></app-banner-message>
+
+  <div class="container-main__form__cu__buttons">
+    <button
+      [class.container-main__form__cu__buttons__invalid__button]="
+        formAddTable.invalid
+      "
+      [disabled]="formAddTable.invalid"
+      (click)="cancelTable()"
+    >
+      Cancel
+    </button>
+    <button
+      [class.container-main__form__cu__buttons__invalid__button]="
+        formAddTable.invalid
+      "
+      [disabled]="formAddTable.invalid"
+      (click)="saveTable()"
+    >
+      Save
+    </button>
   </div>
 </div>

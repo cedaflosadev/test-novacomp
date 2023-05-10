@@ -15,50 +15,38 @@
     ],
     "tables": [
       {
-        "name": "Koombea",
+        "name": "OptionalChanged",
         "type": "model",
         "fields": [
           {
-            "name": "eeeeeeeeeeee",
+            "name": "Identificador",
             "type": "Int",
             "optional": false,
             "restriction": "@id @default(autoincrement())"
           },
           {
-            "name": "createdAt",
-            "type": "DateTime",
-            "optional": false,
-            "restriction": "@default(now())"
+            "name": "contenido",
+            "type": "String",
+            "optional": true,
+            "restriction": ""
           },
           {
-            "name": "push",
+            "name": "varchar",
+            "type": "String",
+            "optional": false,
+            "restriction": "@db.VarChar(200)"
+          },
+          {
+            "name": "optiona1",
             "type": "Boolean",
             "optional": true,
             "restriction": "@default(false)"
           },
           {
-            "name": "publish",
-            "type": "Boolean",
+            "name": "optional2",
+            "type": "String",
             "optional": true,
-            "restriction": "@default(true)"
-          }
-        ]
-      },
-      {
-        "name": "MiniSan",
-        "type": "model",
-        "fields": [
-          {
-            "name": "identificator",
-            "type": "Int",
-            "optional": false,
-            "restriction": "@id @default(autoincrement())"
-          },
-          {
-            "name": "createdAt",
-            "type": "DateTime",
-            "optional": true,
-            "restriction": "@default(now())"
+            "restriction": "@db.VarChar(200)"
           }
         ]
       }

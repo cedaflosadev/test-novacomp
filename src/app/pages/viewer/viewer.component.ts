@@ -5,22 +5,29 @@ import * as go from 'gojs';
 import { AppService } from 'src/app/services/app.service';
 import { take, tap } from 'rxjs';
 import { Database } from 'src/app/interfaces/database.interface';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NgxSpinnerModule],
   templateUrl: './viewer.component.html',
   styleUrls: ['./viewer.component.scss'],
 })
 export class ViewerComponent {
   make = go.GraphObject.make;
+
   myDiagram!: go.Diagram;
+
   fieldTemplate!: any;
 
-  constructor(private appService: AppService) {}
+  constructor(
+    private appService: AppService,
+    private spinner: NgxSpinnerService
+  ) {}
 
   ngOnInit() {
+    this.spinner.show(undefined, { fullScreen: true });
     this.appService
       .getAllDatabase()
       .pipe(
@@ -227,7 +234,9 @@ export class ViewerComponent {
         // },
       ],
     });
-
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
     // this.showModel();
   }
 

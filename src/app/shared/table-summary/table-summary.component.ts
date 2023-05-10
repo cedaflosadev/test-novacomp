@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
-  FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 import { take, tap } from 'rxjs';
-import { Database, Table } from 'src/app/interfaces/database.interface';
+import { Database } from 'src/app/interfaces/database.interface';
 import { AppService } from 'src/app/services/app.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { AppService } from 'src/app/services/app.service';
   templateUrl: './table-summary.component.html',
   styleUrls: ['./table-summary.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, NgxSpinnerModule],
 })
 export class TableSummaryComponent {
   @Input() formAddTable!: FormGroup;
@@ -27,12 +27,17 @@ export class TableSummaryComponent {
 
   @Input() contentFile = '';
 
-  @Output() updateEmit = new EventEmitter<Table>();
+  @Output() updateEmit = new EventEmitter<number>();
+
+  showContent = false;
 
   constructor(
     private appService: AppService,
-    private formBuilder: FormBuilder
-  ) {}
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService
+  ) {
+    this.showContent = true;
+  }
 
   initFormAddTables() {
     this.formAddTable = this.formBuilder.group({
@@ -43,6 +48,7 @@ export class TableSummaryComponent {
   }
 
   deleteTable(index: number) {
+    this.spinner.show(undefined, { fullScreen: true });
     this.fileDatabase.tables.splice(index, 1);
     this.contentFile = this.appService.mapContentFromDatabase(
       this.fileDatabase
@@ -53,13 +59,17 @@ export class TableSummaryComponent {
         take(1),
         tap(() => {
           this.appService.buildPrismaFileHanllde(this.contentFile);
+          setTimeout(() => {
+            this.spinner.hide();
+            this.showContent = true;
+          }, 500);
         })
       )
       .subscribe();
     this.initFormAddTables();
   }
 
-  updateTable(table: Table): void {
-    this.updateEmit.emit(table);
+  updateTable(id: number): void {
+    this.updateEmit.emit(id);
   }
 }

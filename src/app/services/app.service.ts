@@ -84,17 +84,7 @@ export class AppService {
 
   buildPrismaFileHanllde(buildPrismaFile: string): void {
     this.buildPrismaFile({ contentFile: buildPrismaFile })
-      .pipe(
-        take(1),
-        tap((prismaFileRes) => {
-          const { response } = prismaFileRes;
-          if (response) {
-            console.log('CREADO EL FILE');
-          } else {
-            console.log('OCURRIO UN ERROR');
-          }
-        })
-      )
+      .pipe(take(1))
       .subscribe();
   }
 }

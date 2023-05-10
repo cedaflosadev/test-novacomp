@@ -1,5 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
 html,
 body {
   margin: 0;
+}
+
+button {
+  cursor: pointer;
+  height: 30px;
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  background-color: #04aa6d;
+  color: #ffffff;
+}
+
+.loading {
+  color: white;
+  padding-top: 50px;
 }

@@ -2,10 +2,10 @@
   <p class="loading">Loading ...</p>
 </ngx-spinner>
 <div *ngIf="showContent" class="container-main">
-  <app-table-summary
+  <app-form-creator-updater
     [contentFile]="contentFile"
     [fileDatabase]="fileDatabase"
     [formAddTable]="formAddTable"
-    (updateEmit)="updateTable($event)"
-  ></app-table-summary>
+    [id]="idToEdit"
+  ></app-form-creator-updater>
 </div>

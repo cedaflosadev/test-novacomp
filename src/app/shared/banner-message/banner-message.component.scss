@@ -1,0 +1,15 @@
+.container-banner {
+  color: #ffffff;
+  overflow: auto;
+  height: 30px;
+  padding: 5px;
+  word-wrap: break-word;
+  background-color: #04aa6d;
+
+  &__danger {
+    background-color: rgb(255, 72, 72);
+  }
+  &__success {
+    background-color: #04aa6d;
+  }
+}

@@ -7,4 +7,9 @@
   color: #ffffff;
   padding: 5px 20px;
   justify-content: space-between;
+
+  &__menu {
+    display: flex;
+    gap: 10px;
+  }
 }

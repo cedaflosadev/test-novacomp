@@ -10,4 +10,14 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/viewer/viewer.component').then((m) => m.ViewerComponent),
   },
+  {
+    path: 'creation',
+    loadComponent: () =>
+      import('./pages/create/create.component').then((m) => m.CreateComponent),
+  },
+  {
+    path: 'creation/:id',
+    loadComponent: () =>
+      import('./pages/create/create.component').then((m) => m.CreateComponent),
+  },
 ];

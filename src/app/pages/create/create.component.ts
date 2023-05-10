@@ -1,15 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subject, takeUntil, tap } from 'rxjs';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Database } from 'src/app/interfaces/database.interface';
+import { Subject, takeUntil, tap } from 'rxjs';
 import { AppService } from 'src/app/services/app.service';
-import { Database, Table } from 'src/app/interfaces/database.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TableSummaryComponent } from 'src/app/shared/table-summary/table-summary.component';
 import { FormCreatorUpdaterComponent } from 'src/app/shared/form-creator-updater/form-creator-updater.component';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
-  selector: 'app-home',
+  selector: 'app-create',
   standalone: true,
   imports: [
     CommonModule,
@@ -18,10 +19,10 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     RouterModule,
     NgxSpinnerModule,
   ],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.scss'],
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class CreateComponent {
   contentFile = '';
 
   fileDatabase = {} as Database;
@@ -30,12 +31,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   formAddTable!: FormGroup;
 
+  idToEdit = '';
+
   showContent = false;
 
   constructor(
     private appService: AppService,
     private formBuilder: FormBuilder,
-    private router: Router,
+    private route: ActivatedRoute,
     private spinner: NgxSpinnerService
   ) {
     this.initFormAddTables();
@@ -44,6 +47,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.spinner.show(undefined, { fullScreen: true });
     this.getContentPrismaFile();
+    this.route.params
+      .pipe(
+        takeUntil(this.unsubscribe),
+        tap((params) => {
+          this.idToEdit = params['id'];
+        })
+      )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
@@ -57,10 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       type: ['model', [Validators.required]],
       fields: this.formBuilder.array([], [Validators.required]),
     });
-  }
-
-  updateTable(id: number): void {
-    this.router.navigate(['/creation', id]);
   }
 
   getContentPrismaFile(): void {

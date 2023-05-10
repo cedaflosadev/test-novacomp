@@ -1,37 +1,81 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   FormArray,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 
-import { take, tap } from 'rxjs';
-import { Database } from 'src/app/interfaces/database.interface';
+import { take, tap, timeout } from 'rxjs';
+import { Database, Table } from 'src/app/interfaces/database.interface';
 import { AppService } from 'src/app/services/app.service';
+import { BannerMessageComponent } from '../banner-message/banner-message.component';
+import { Router, RouterModule } from '@angular/router';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-form-creator-updater',
   templateUrl: './form-creator-updater.component.html',
   styleUrls: ['./form-creator-updater.component.scss'],
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    BannerMessageComponent,
+    RouterModule,
+    NgxSpinnerModule,
+  ],
 })
-export class FormCreatorUpdaterComponent {
+export class FormCreatorUpdaterComponent implements OnChanges {
   @Input() formAddTable!: FormGroup;
 
   @Input() fileDatabase = {} as Database;
 
   @Input() contentFile = '';
 
+  @Input() id = '';
+
+  bannerMessage = { message: '', type: '' };
+
   constructor(
     private appService: AppService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private spinner: NgxSpinnerService
   ) {}
 
+  ngOnChanges(): void {
+    if (this.id && this.fileDatabase?.tables?.length) {
+      this.updateTable(this.fileDatabase.tables[Number(this.id)]);
+    }
+  }
+
+  updateTable(table: Table) {
+    this.initFormAddTables();
+    this.formAddTable.controls['name'].setValue(table.name);
+    this.formAddTable.controls['type'].setValue(table.type);
+
+    table.fields.forEach((fieldContent) => {
+      const field = this.formBuilder.group({
+        name: [fieldContent.name, [Validators.required]],
+        type: [fieldContent.type, [Validators.required]],
+        optional: [fieldContent.optional, [Validators.required]],
+        restriction: [fieldContent.restriction, []],
+      });
+      (this.formAddTable.controls['fields'] as FormArray).push(field);
+    });
+  }
   initFormAddTables() {
     this.formAddTable = this.formBuilder.group({
       name: ['', [Validators.required]],
@@ -61,16 +105,36 @@ export class FormCreatorUpdaterComponent {
 
   cancelTable() {
     this.initFormAddTables();
+    this.router.navigate(['./']);
+  }
+
+  showHideBanner(message: string = '', type: string = '') {
+    this.bannerMessage = { message, type };
+  }
+
+  getFormValidationErrors() {
+    Object.keys(this.formAddTable.controls).forEach((key) => {
+      const controlErrors: ValidationErrors | null =
+        this.formAddTable!.get(key)!.errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach((keyError) => {
+          this.showHideBanner('* Form have erros: ' + keyError, 'error');
+        });
+      }
+    });
   }
 
   saveTable() {
-    if (this.formAddTable.valid) {
-      const tableCreatedId = this.fileDatabase.tables.findIndex(
-        (table) => table.name === this.formAddTable.controls['name'].value
-      );
+    this.spinner.show(undefined, { fullScreen: true });
+    this.showHideBanner();
 
-      if (tableCreatedId !== -1) {
-        this.fileDatabase.tables[tableCreatedId] = this.formAddTable.value;
+    if (this.formAddTable.invalid) {
+      return this.getFormValidationErrors();
+    }
+
+    if (this.formAddTable.valid) {
+      if (this.id) {
+        this.fileDatabase.tables[Number(this.id)] = this.formAddTable.value;
       } else {
         this.fileDatabase.tables.push(this.formAddTable.value);
       }
@@ -84,6 +148,14 @@ export class FormCreatorUpdaterComponent {
           take(1),
           tap(() => {
             this.appService.buildPrismaFileHanllde(this.contentFile);
+            this.showHideBanner('Esquema actualizado correctamente', 'success');
+            setTimeout(() => {
+              setTimeout(() => {
+                this.spinner.hide();
+              }, 200);
+              this.showHideBanner();
+              this.router.navigate(['./']);
+            }, 800);
           })
         )
         .subscribe();
