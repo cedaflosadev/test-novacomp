@@ -39,6 +39,26 @@ export class FormCreatorUpdaterComponent implements OnChanges {
 
   validations = { nameExist: false };
 
+  originalTypes = [
+    { value: 'Int', label: 'Integer' },
+    { value: 'String', label: 'Text' },
+    { value: 'Boolean', label: 'Boolean' },
+    { value: 'DateTime', label: 'DateTime' },
+  ];
+
+  optionsTypeFields = [] as { value: string; label: string }[];
+
+  optionsRestrictions = [
+    { value: '@id @default(autoincrement())', label: 'AutoIncrement' },
+    { value: '@unique', label: 'Unique' },
+    { value: '@updatedAt', label: 'UpdateAt' },
+    { value: '@default(now())', label: 'Now' },
+    { value: '@default(false)', label: 'False' },
+    { value: '@default(true)', label: 'True' },
+  ];
+
+  customRestriction = false;
+
   constructor(
     private appService: AppService,
     private formBuilder: FormBuilder,
@@ -47,9 +67,22 @@ export class FormCreatorUpdaterComponent implements OnChanges {
   ) {}
 
   ngOnChanges(): void {
+    this.optionsTypeFields = this.originalTypes as never;
     if (this.id && this.fileDatabase?.tables?.length) {
       this.updateTable(this.fileDatabase.tables[Number(this.id)]);
+      this.aditionalOptionsTypes();
     }
+  }
+
+  aditionalOptionsTypes() {
+    const OptionsAdditionals = this.fileDatabase.tables.map((table) => {
+      return { value: table.name, label: table.name };
+    });
+
+    this.optionsTypeFields = [
+      ...this.optionsTypeFields,
+      ...OptionsAdditionals,
+    ] as never;
   }
 
   updateTable(table: Table) {

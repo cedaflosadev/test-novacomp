@@ -37,6 +37,36 @@
             "restriction": ""
           }
         ]
+      },
+      {
+        "name": "tableName",
+        "type": "model",
+        "fields": [
+          {
+            "name": "identificador",
+            "type": "Int",
+            "optional": false,
+            "restriction": "@id @default(autoincrement())"
+          },
+          {
+            "name": "contenido",
+            "type": "Boolean",
+            "optional": true,
+            "restriction": "@default(false)"
+          },
+          {
+            "name": "prismafield",
+            "type": "DateTime",
+            "optional": false,
+            "restriction": "@updatedAt\n                "
+          },
+          {
+            "name": "datecreated",
+            "type": "DateTime",
+            "optional": false,
+            "restriction": "@default(now())"
+          }
+        ]
       }
     ]
   }

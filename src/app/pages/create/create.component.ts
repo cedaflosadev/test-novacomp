@@ -40,12 +40,11 @@ export class CreateComponent {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
-  ) {
-    this.initFormAddTables();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.spinner.show(undefined, { fullScreen: true });
+    this.initFormAddTables();
     this.getContentPrismaFile();
     this.route.params
       .pipe(

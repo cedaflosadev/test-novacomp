@@ -56,10 +56,12 @@
             >
               <label>* Field type:</label>
               <select formControlName="type">
-                <option value="Int">Integer</option>
-                <option value="String">String</option>
-                <option value="Boolean">Boolean</option>
-                <option value="DateTime">DateTime</option>
+                <option
+                  *ngFor="let item of optionsTypeFields"
+                  [value]="item.value"
+                >
+                  {{ item.label }}
+                </option>
               </select>
             </div>
             <div
@@ -72,7 +74,15 @@
               class="container-main__form__cu__content__form__fields__controls__group"
             >
               <label>Field restrictions:</label>
-              <input formControlName="restriction" type="text" />
+
+              <select *ngIf="!customRestriction" formControlName="restriction">
+                <option
+                  *ngFor="let item of optionsRestrictions"
+                  [value]="item.value"
+                >
+                  {{ item.label }}
+                </option>
+              </select>
             </div>
             <button (click)="deleteField(index)">Delete</button>
           </div>
@@ -83,15 +93,7 @@
   </div>
 
   <div class="container-main__form__cu__buttons">
-    <button
-      [class.container-main__form__cu__buttons__invalid__button]="
-        formAddTable.invalid
-      "
-      [disabled]="formAddTable.invalid"
-      (click)="cancelTable()"
-    >
-      Cancel
-    </button>
+    <button (click)="cancelTable()">Cancel</button>
     <button
       [class.container-main__form__cu__buttons__invalid__button]="
         formAddTable.invalid
