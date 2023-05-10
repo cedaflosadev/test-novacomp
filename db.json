@@ -10,7 +10,7 @@
         "name": "db",
         "type": "datasource",
         "provider": "postgresql",
-        "url": "postgresql://database-admin-test:123456@localhost:32780/database-admin-test?schema=public"
+        "url": "postgresql://koombea-test:123456@localhost:32780/database-admin-test?schema=public"
       }
     ],
     "tables": [
