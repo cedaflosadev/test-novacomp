@@ -1,11 +1,6 @@
 <ngx-spinner>
   <p class="loading">Loading ...</p>
 </ngx-spinner>
-<div *ngIf="showContent" class="container-main">
-  <app-table-summary
-    [contentFile]="contentFile"
-    [fileDatabase]="fileDatabase"
-    [formAddTable]="formAddTable"
-    (updateEmit)="updateTable($event)"
-  ></app-table-summary>
+<div *ngIf="flow$ | async" class="container-main">
+  <app-table-summary [fileDatabase]="fileDatabase"></app-table-summary>
 </div>

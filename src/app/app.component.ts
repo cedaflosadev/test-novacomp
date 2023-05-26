@@ -10,5 +10,5 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
   imports: [RouterModule, NavbarComponent],
 })
 export class AppComponent {
-  title = 'Database Admin';
+  title = 'University List';
 }
