@@ -1,0 +1,25 @@
+<div *ngIf="(flow$ | async) && universitySelect?.name" style="padding: 20px">
+  <h1>Details For {{ universitySelect.name }}</h1>
+
+  <p>
+    <b> Code:</b><span>{{ universitySelect.alpha_two_code }}</span>
+  </p>
+  <p>
+    <b> Country:</b><span>{{ universitySelect.country }}</span>
+  </p>
+  <p>
+    <b> Domains:</b>
+    <span *ngFor="let itemDomain of universitySelect.domains"
+      >{{ itemDomain }},</span
+    >
+  </p>
+  <p>
+    <b> StateProvince:</b><span>{{ universitySelect.stateprovince }}</span>
+  </p>
+  <p>
+    <b> WebPages:</b>
+    <span *ngFor="let itemWeb of universitySelect.web_pages"
+      >{{ itemWeb }},</span
+    >
+  </p>
+</div>

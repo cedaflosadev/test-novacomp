@@ -14,7 +14,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let field of fileDatabase">
-            <td>{{ field.name }}</td>
+            <td (click)="goToDetails(field)">{{ field.name }}</td>
             <td>{{ field.country }}</td>
             <td>{{ field.web_pages[0] }}</td>
           </tr>
