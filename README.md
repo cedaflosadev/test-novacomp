@@ -1,4 +1,4 @@
-# Database admin (Quick Start)
+# Test NovaComp (Quick Start)
 
 1.) npm install --legacy-peer-deps
 
