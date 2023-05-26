@@ -25,7 +25,6 @@ export class DetailsComponent implements OnInit {
       take(1),
       map((universitySelectd: University) => {
         this.universitySelect = universitySelectd;
-        console.log('UNIVERSIT', universitySelectd);
         if (!this.universitySelect?.name) {
           this.router.navigate(['/']);
         }
